@@ -19,7 +19,7 @@ Boilerplate NestJS
 Clone esse repositório e instale as dependências.
 
 ```sh
-  cd ./nestjs-api
+  cd ./nestjs-grpc
   yarn
 ```
 
