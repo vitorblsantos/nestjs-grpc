@@ -2,7 +2,12 @@ import { str, envsafe, port } from 'envsafe'
 
 export const Environment = envsafe({
   APP_NAME: str({
-    default: 'nestjs-api'
+    default: 'nestjs-grpc'
+  }),
+  HOST: str({
+    devDefault: '0.0.0.0',
+    desc: 'Host that the app is running on',
+    example: '0.0.0.0'
   }),
   MONGODB_DATABASE: str({
     allowEmpty: false
@@ -21,19 +26,8 @@ export const Environment = envsafe({
     choices: ['development', 'production']
   }),
   PORT: port({
-    devDefault: 8080,
-    desc: 'The port the app is running on',
-    example: 8080
-  }),
-  REDIS_HOST: str({
-    allowEmpty: false
-  }),
-  REDIS_PASSWORD: str({
-    allowEmpty: true
-  }),
-  REDIS_PORT: port({
-    allowEmpty: false,
-    devDefault: 6379,
-    desc: 'The port the Redis Server is running on'
+    devDefault: 3019,
+    desc: 'Port that the app is running on',
+    example: 3019
   })
 })

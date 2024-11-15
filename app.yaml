@@ -1,7 +1,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: nestjs-api
+  name: nestjs-grpc
   labels:
     cloud.googleapis.com/location: us-central1
   annotations:
@@ -17,9 +17,9 @@ spec:
     spec:
       containerConcurrency: 1
       timeoutSeconds: 300
-      serviceAccountName: nestjs-api@vitorblsantos.iam.gserviceaccount.com
+      serviceAccountName: nestjs-grpc@vitorblsantos.iam.gserviceaccount.com
       containers:
-        - image: us.gcr.io/vitorblsantos/nestjs-api:latest
+        - image: us.gcr.io/vitorblsantos/nestjs-grpc:latest
           ports:
             - name: http1
               containerPort: 8080
@@ -44,12 +44,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: latest
-                  name: NESTJS_API_REDIS_PASSWORD
+                  name: NESTJS_GRPC_REDIS_PASSWORD
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: latest
-                  name: NESTJS_API_MONGODB_PASSWORD
+                  name: NESTJS_GRPC_MONGODB_PASSWORD
 
           resources:
             limits:

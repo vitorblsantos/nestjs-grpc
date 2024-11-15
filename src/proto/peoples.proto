@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package Peoples;
+
+service Peoples {
+  rpc getPeoples(getPeoplesInput) returns (getPeoplesOutput) {}
+}
+
+message getPeoplesInput {
+  string id = 1;
+}
+
+message getPeoplesOutput {
+  string id = 1;
+  string name = 2;
+  string height = 3;
+  string mass = 4;
+  string hair_color = 5;
+  string skin_color = 6;
+  string eye_color = 7;
+  string birth_year = 8;
+  string gender = 9;
+  string homeworld = 10;
+  repeated string films = 11;
+  repeated string species = 12;
+  repeated string vehicles = 13;
+  repeated string starships = 14;
+  string created = 15;
+  string edited = 16;
+  string url = 17;
+}

@@ -21,9 +21,6 @@
       "@/controllers/*": [
         "./src/controllers/*"
       ],
-      "@/dto/*": [
-        "./src/dto/*"
-      ],
       "@/interfaces/*": [
         "./src/interfaces/*"
       ],
