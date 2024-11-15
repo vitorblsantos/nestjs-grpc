@@ -1,0 +1,35 @@
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
+
+services:
+  mongo:
+    image: mongo
+    networks:
+      - default
+    ports:
+      - "27017:27017"
+    restart: on-failure
+
+  nestjs-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nestjs-api
+    image: us.gcr.io/vitorblsantos/nestjs-api:latest
+    networks:
+      - default
+    ports:
+      - "8080:8080"
+    restart: on-failure
+
+  redis:
+    image: redis
+    networks:
+      - default
+    ports:
+      - "6379:6379"
+    restart: on-failure
+

@@ -1,0 +1,60 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: nestjs-api
+  labels:
+    cloud.googleapis.com/location: us-central1
+  annotations:
+    run.googleapis.com/ingress: internal-and-cloud-load-balancing
+    run.googleapis.com/ingress-status: all
+spec:
+  template:
+    metadata:
+      labels:
+        run.googleapis.com/startupProbeType: Custom
+      annotations:
+        autoscaling.knative.dev/maxScale: "1"
+    spec:
+      containerConcurrency: 1
+      timeoutSeconds: 300
+      serviceAccountName: nestjs-api@vitorblsantos.iam.gserviceaccount.com
+      containers:
+        - image: us.gcr.io/vitorblsantos/nestjs-api:latest
+          ports:
+            - name: http1
+              containerPort: 8080
+          env:
+            - name: MONGODB_DATABASE
+              value: 'humidity'
+            - name: MONGODB_HOST
+              value: 'demeter.hpdum.mongodb.net'
+            - name: MONGODB_PASSWORD
+              value: ''
+            - name: MONGODB_USER
+              value: 'demeter'
+            - name: NODE_ENV
+              value: 'production'
+            - name: PORT
+              value: '8080'
+            - name: REDIS_HOST
+              value: 'redis-11532.c99.us-east-1-4.ec2.redns.redis-cloud.com'
+            - name: REDIS_PORT
+              value: '11532'
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: latest
+                  name: NESTJS_API_REDIS_PASSWORD
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: latest
+                  name: NESTJS_API_MONGODB_PASSWORD
+
+          resources:
+            limits:
+              cpu: "2"
+              memory: 256Mi
+  traffic:
+    - percent: 100
+      latestRevision: true
